@@ -36,7 +36,8 @@
                 </div>
             </div>
         </div>
-        <nav class="stick-menu menu-wrap simple line" data-inview-showup="showup-translate-left">
+        <nav class="stick-menu menu-wrap simple line" data-inview-showup="showup-translate-left"></nav>
+        <!-- <nav class="stick-menu menu-wrap simple line" data-inview-showup="showup-translate-left">
             <div class="menu-container menu-row">
                 <div class="logo" data-inview-showup="showup-translate-right"><a href="index.html"><img
                             src="assets/images/mofix-brand.png" alt="ProFix"></a>
@@ -70,7 +71,7 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav> -->
     </header>
     <section>
         <div class="flexslider screen-height">
@@ -681,6 +682,23 @@
                 var h=d.getElementsByTagName('script')[0];h.parentNode.insertBefore(s,h);
         })(window,document,'https://cdn.bitrix24.com/b25133043/crm/site_button/loader_1_cvmtit.js');
 </script>
+<script>$(function() {
+
+    $("#nav").load("menu.html");
+
+    function activeNav() {
+        var pgurl = window.location.href.substr(window.location.href.lastIndexOf("/")+1);
+         $("#nav ul li a").each(function(){
+              if($(this).attr("href") == pgurl || $(this).attr("href") == '' )
+              $(this).addClass("active");
+         });
+    }
+
+    setTimeout(function() {
+        activeNav();
+    }, 100);
+
+});</script>
 
 </body>
 </html>
