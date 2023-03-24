@@ -46,7 +46,7 @@
                         for="header-shown"><i class="fas fa-bars" aria-hidden="true"></i></label></div>
                 <div class="clearfix xs-shown"></div>
                 
-               <nav></nav>
+                <div w3-include-html="menu.html"></div>
             </div>
         </nav>
     </header>
@@ -659,23 +659,42 @@
                 var h=d.getElementsByTagName('script')[0];h.parentNode.insertBefore(s,h);
         })(window,document,'https://cdn.bitrix24.com/b25133043/crm/site_button/loader_1_cvmtit.js');
 </script>
-<script>$(function() {
 
-    $("#nav").load("menu.html");
 
-    function activeNav() {
-        var pgurl = window.location.href.substr(window.location.href.lastIndexOf("/")+1);
-         $("#nav ul li a").each(function(){
-              if($(this).attr("href") == pgurl || $(this).attr("href") == '' )
-              $(this).addClass("active");
-         });
+<script>
+    function includeHTML() {
+      var z, i, elmnt, file, xhttp;
+      /* Loop through a collection of all HTML elements: */
+      z = document.getElementsByTagName("*");
+      for (i = 0; i < z.length; i++) {
+        elmnt = z[i];
+        /*search for elements with a certain atrribute:*/
+        file = elmnt.getAttribute("w3-include-html");
+        if (file) {
+          /* Make an HTTP request using the attribute value as the file name: */
+          xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+            if (this.readyState == 4) {
+              if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+              if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+              /* Remove the attribute, and call this function once more: */
+              elmnt.removeAttribute("w3-include-html");
+              includeHTML();
+            }
+          }
+          xhttp.open("GET", file, true);
+          xhttp.send();
+          /* Exit the function: */
+          return;
+        }
+      }
     }
+    </script>
 
-    setTimeout(function() {
-        activeNav();
-    }, 100);
 
-});</script>
+<script>
+    includeHTML();
+    </script>
 
 </body>
 </html>
